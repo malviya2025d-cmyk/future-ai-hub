@@ -170,6 +170,7 @@ document.getElementById("loading").innerHTML =
 
 document.getElementById("output").innerHTML = "";
 
+/* API KEY */
 const API_KEY = "PASTE_YOUR_GEMINI_API_KEY";
 
 const prompt = `
@@ -208,21 +209,48 @@ headers:{
 
 body:JSON.stringify({
 
-contents:[{
-
-parts:[{
+contents:[
+{
+parts:[
+{
 text: prompt
-}]
-
-}]
+}
+]
+}
+]
 
 })
 
-});
+}
+);
 
 const data = await response.json();
 
 console.log(data);
+
+/* ERROR CHECK */
+
+if(data.error){
+
+document.getElementById("loading").innerHTML = "";
+
+document.getElementById("output").innerHTML = `
+
+<div class="resultBox">
+
+<h2>Error ❌</h2>
+
+<p>${data.error.message}</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+/* RESULT */
 
 const result =
 data.candidates[0].content.parts[0].text;
@@ -260,7 +288,7 @@ document.getElementById("output").innerHTML = `
 <h2>Error ❌</h2>
 
 <p>
-API not working or invalid API key.
+Something went wrong.
 </p>
 
 </div>
