@@ -1,146 +1,247 @@
+# Advanced AI Shorts Creator HTML
+
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AI Shorts Creator</title>
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-    margin:0;
-    padding:0;
-    background:#0d0d0d;
-    color:white;
-    font-family:Arial;
+background:#0d0d0d;
+font-family:Arial;
+color:white;
 }
 
 header{
-    background:#111;
-    text-align:center;
-    padding:30px;
-    border-bottom:2px solid gold;
+background:#111;
+padding:25px;
+text-align:center;
+border-bottom:2px solid gold;
 }
 
 header h1{
-    color:gold;
-    font-size:42px;
+color:gold;
+font-size:40px;
+}
+
+header p{
+margin-top:10px;
+color:#ccc;
 }
 
 .container{
-    width:90%;
-    max-width:1000px;
-    margin:auto;
-    margin-top:40px;
+width:95%;
+max-width:1200px;
+margin:auto;
+padding:20px;
 }
 
-.card{
-    background:#1a1a1a;
-    padding:25px;
-    border-radius:20px;
-    border:1px solid #333;
+.mainCard{
+background:#171717;
+padding:25px;
+border-radius:20px;
+border:1px solid #333;
+margin-top:20px;
+}
+
+.inputBox{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
 }
 
 input{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:12px;
-    background:#222;
-    color:white;
-    font-size:18px;
-    margin-top:15px;
+flex:1;
+padding:16px;
+border:none;
+border-radius:12px;
+background:#222;
+color:white;
+font-size:18px;
 }
 
 button{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:12px;
-    background:gold;
-    color:black;
-    font-size:18px;
-    font-weight:bold;
-    margin-top:20px;
-    cursor:pointer;
+padding:16px 25px;
+border:none;
+border-radius:12px;
+background:gold;
+color:black;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
 }
 
 button:hover{
-    background:orange;
-}
-
-.resultBox{
-    background:#111;
-    padding:20px;
-    border-radius:15px;
-    margin-top:25px;
-    border:1px solid #333;
-}
-
-.resultBox h2{
-    color:gold;
-}
-
-.copyBtn{
-    background:#222;
-    color:white;
-}
-
-.footer{
-    text-align:center;
-    color:#888;
-    padding:30px;
+background:orange;
 }
 
 .loading{
-    color:gold;
-    text-align:center;
-    margin-top:20px;
-    font-size:18px;
+text-align:center;
+margin-top:20px;
+font-size:18px;
+color:gold;
+}
+
+.tabs{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:25px;
+}
+
+.tabBtn{
+background:#222;
+color:white;
+padding:12px 20px;
+border-radius:10px;
+font-size:15px;
+}
+
+.tabBtn.active{
+background:gold;
+color:black;
+}
+
+.tabContent{
+display:none;
+margin-top:20px;
+background:#111;
+padding:20px;
+border-radius:15px;
+border:1px solid #333;
+}
+
+.tabContent.active{
+display:block;
 }
 
 pre{
-    white-space:pre-wrap;
-    line-height:30px;
-    font-size:16px;
-    font-family:Arial;
+white-space:pre-wrap;
+line-height:28px;
+font-size:15px;
+}
+
+.copyBtn{
+margin-top:20px;
+background:#222;
+color:white;
+width:100%;
+}
+
+.footer{
+text-align:center;
+padding:30px;
+color:#888;
+}
+
+@media(max-width:700px){
+
+header h1{
+font-size:30px;
+}
+
+.inputBox{
+flex-direction:column;
+}
+
+button{
+width:100%;
+}
+
+.tabs{
+overflow-x:auto;
+white-space:nowrap;
+}
+
+.tabBtn{
+font-size:14px;
+padding:10px 15px;
+}
+
 }
 
 </style>
-
 </head>
-
 <body>
 
 <header>
-
 <h1>AI Shorts Creator 🚀</h1>
-
-<p>Create Viral Shorts Content In One Click</p>
-
+<p>Create Viral YouTube Shorts Content In One Click</p>
 </header>
 
 <div class="container">
 
-<div class="card">
+<div class="mainCard">
 
-<h2>Enter Video Topic</h2>
+<h2>Enter Your Topic</h2>
 
-<input
-type="text"
-id="topic"
-placeholder="Example: sad motivation story"
-/>
-
-<button onclick="generateAI()">
-Generate Viral Content 🔥
-</button>
+<div class="inputBox">
+<input type="text" id="topic" placeholder="Example: sad motivation story">
+<button onclick="generateAI()">Generate 🔥</button>
+</div>
 
 <div id="loading" class="loading"></div>
 
-<div id="output"></div>
+<div class="tabs">
+<button class="tabBtn active" onclick="showTab('title')">Title</button>
+<button class="tabBtn" onclick="showTab('description')">Description</button>
+<button class="tabBtn" onclick="showTab('hashtags')">Hashtags</button>
+<button class="tabBtn" onclick="showTab('tags')">Tags</button>
+<button class="tabBtn" onclick="showTab('script')">Script</button>
+<button class="tabBtn" onclick="showTab('prompts')">Scene Prompts</button>
+<button class="tabBtn" onclick="showTab('thumbnail')">Thumbnail</button>
+<button class="tabBtn" onclick="showTab('upload')">Upload Time</button>
+</div>
+
+<div id="title" class="tabContent active">
+<pre id="titleText"></pre>
+<button class="copyBtn" onclick="copyContent('titleText')">Copy Title</button>
+</div>
+
+<div id="description" class="tabContent">
+<pre id="descriptionText"></pre>
+<button class="copyBtn" onclick="copyContent('descriptionText')">Copy Description</button>
+</div>
+
+<div id="hashtags" class="tabContent">
+<pre id="hashtagsText"></pre>
+<button class="copyBtn" onclick="copyContent('hashtagsText')">Copy Hashtags</button>
+</div>
+
+<div id="tags" class="tabContent">
+<pre id="tagsText"></pre>
+<button class="copyBtn" onclick="copyContent('tagsText')">Copy Tags</button>
+</div>
+
+<div id="script" class="tabContent">
+<pre id="scriptText"></pre>
+<button class="copyBtn" onclick="copyContent('scriptText')">Copy Script</button>
+</div>
+
+<div id="prompts" class="tabContent">
+<pre id="promptsText"></pre>
+<button class="copyBtn" onclick="copyContent('promptsText')">Copy Prompts</button>
+</div>
+
+<div id="thumbnail" class="tabContent">
+<pre id="thumbnailText"></pre>
+<button class="copyBtn" onclick="copyContent('thumbnailText')">Copy Thumbnail</button>
+</div>
+
+<div id="upload" class="tabContent">
+<pre id="uploadText"></pre>
+<button class="copyBtn" onclick="copyContent('uploadText')">Copy Upload Time</button>
+</div>
 
 </div>
 
@@ -152,78 +253,82 @@ Made For Indian Creators ❤️
 
 <script>
 
-async function generateAI(){
+function showTab(tabId){
 
-const topic =
-document.getElementById("topic").value;
+const tabs = document.querySelectorAll('.tabContent');
+const btns = document.querySelectorAll('.tabBtn');
 
-if(topic === ""){
+tabs.forEach(tab=>{
+tab.classList.remove('active');
+});
 
-alert("Please enter a topic");
+btns.forEach(btn=>{
+btn.classList.remove('active');
+});
 
-return;
+document.getElementById(tabId).classList.add('active');
+
+event.target.classList.add('active');
 
 }
 
-document.getElementById("loading").innerHTML =
-"Generating AI Content...";
+async function generateAI(){
 
-document.getElementById("output").innerHTML = "";
+const topic = document.getElementById('topic').value;
 
-/* DIRECT API KEY */
-const API_KEY = "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";
+if(topic === ''){
+alert('Please enter a topic');
+return;
+}
+
+document.getElementById('loading').innerHTML = 'Generating AI Content...';
+
+const API_KEY = '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';
 
 const prompt = `
-Generate:
+Generate content for YouTube Shorts.
 
-1 Viral Hook
+Topic: ${topic}
 
-1 Emotional 30 second YouTube Shorts script
+Give response exactly in this format:
 
-7 cinematic image prompts
+TITLE:
 
-1 thumbnail text
+DESCRIPTION:
 
-10 viral hashtags
+HASHTAGS:
 
-Best upload time for India
+TAGS:
 
-Short captions
+30 SECOND SCRIPT:
 
-Topic:
-${topic}
+7 SCENE IMAGE PROMPTS:
 
-Give everything in clean formatting.
+THUMBNAIL TEXT:
+
+BEST UPLOAD TIME INDIA:
 `;
 
 try{
 
 const response = await fetch(
-"https://api.groq.com/openai/v1/chat/completions",
+'https://api.groq.com/openai/v1/chat/completions',
 {
-method:"POST",
-
+method:'POST',
 headers:{
-"Content-Type":"application/json",
-"Authorization":`Bearer ${API_KEY}`
+'Content-Type':'application/json',
+'Authorization':`Bearer ${API_KEY}`
 },
-
 body:JSON.stringify({
-
-model:"llama-3.3-70b-versatile",
-
-
+model:'llama-3.3-70b-versatile',
 messages:[
 {
-role:"user",
-content: prompt
+role:'user',
+content:prompt
 }
 ],
-
 temperature:0.7
-
 })
-
 }
 );
 
@@ -231,90 +336,75 @@ const data = await response.json();
 
 console.log(data);
 
-/* ERROR CHECK */
-
 if(data.error){
-
-document.getElementById("loading").innerHTML = "";
-
-document.getElementById("output").innerHTML = `
-
-<div class="resultBox">
-
-<h2>Error ❌</h2>
-
-<p>${data.error.message}</p>
-
-</div>
-
-`;
-
+alert(data.error.message);
 return;
-
 }
 
-/* RESULT */
+const result = data.choices[0].message.content;
 
-const result =
-data.choices[0].message.content;
+function extractSection(start, end){
+const regex = new RegExp(start + '([\\s\\S]*?)' + end);
+const match = result.match(regex);
+return match ? match[1].trim() : 'Not Generated';
+}
 
-document.getElementById("loading").innerHTML = "";
+document.getElementById('titleText').innerText =
+extractSection('TITLE:', 'DESCRIPTION:');
 
-document.getElementById("output").innerHTML = `
 
-<div class="resultBox">
+document.getElementById('descriptionText').innerText =
+extractSection('DESCRIPTION:', 'HASHTAGS:');
 
-<h2>Generated Content 🚀</h2>
 
-<pre id="aiText">${result}</pre>
+document.getElementById('hashtagsText').innerText =
+extractSection('HASHTAGS:', 'TAGS:');
 
-<button
-class="copyBtn"
-onclick="copyText()">
-Copy Content
-</button>
 
-</div>
+document.getElementById('tagsText').innerText =
+extractSection('TAGS:', '30 SECOND SCRIPT:');
 
-`;
+
+document.getElementById('scriptText').innerText =
+extractSection('30 SECOND SCRIPT:', '7 SCENE IMAGE PROMPTS:');
+
+
+document.getElementById('promptsText').innerText =
+extractSection('7 SCENE IMAGE PROMPTS:', 'THUMBNAIL TEXT:');
+
+
+document.getElementById('thumbnailText').innerText =
+extractSection('THUMBNAIL TEXT:', 'BEST UPLOAD TIME INDIA:');
+
+
+document.getElementById('uploadText').innerText =
+result.split('BEST UPLOAD TIME INDIA:')[1];
+
+
+document.getElementById('loading').innerHTML = '';
 
 }catch(error){
 
 console.log(error);
 
-document.getElementById("loading").innerHTML = "";
-
-document.getElementById("output").innerHTML = `
-
-<div class="resultBox">
-
-<h2>Error ❌</h2>
-
-<p>
-Something went wrong.
-</p>
-
-</div>
-
-`;
+document.getElementById('loading').innerHTML = 'Error Loading Content';
 
 }
 
 }
 
-function copyText(){
+function copyContent(id){
 
-const text =
-document.getElementById("aiText").innerText;
+const text = document.getElementById(id).innerText;
 
 navigator.clipboard.writeText(text);
 
-alert("Content Copied!");
+alert('Copied Successfully');
 
 }
 
 </script>
 
 </body>
-
 </html>
+```
